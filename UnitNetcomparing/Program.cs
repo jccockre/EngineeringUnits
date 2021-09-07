@@ -15,6 +15,55 @@ namespace UnitNetcomparing
         static void Main(string[] args)
         {
 
+            //Made a special case for frequency for now
+
+            //Create unit based on UnitSystem 
+            //and make the unit check at that time?
+
+            //UnknownUnit Abs() could we create it as some kind af generic so we dont have to cast it to and from UnknownUnit
+
+            Power f1 = new Power(3, PowerUnit.KilojoulePerHour);
+
+
+            string jsonString1 = JsonConvert.SerializeObject(f1);
+
+            var howManyBytes = jsonString1.Length * sizeof(Char);
+
+
+            Debug.Print($"Size is: {howManyBytes}");
+
+
+
+
+
+
+            //Debug.Print($"{f2}");
+            //Debug.Print($"{f3}");
+            //Debug.Print($"{f4}");
+
+            Mass mass = new Mass(1, MassUnit.Centigram);
+            Duration d = new Duration(1, DurationUnit.Minute);
+
+            MassFlow M0 = mass / d;
+
+            Debug.Print($"{M0}");
+
+
+            MassFlow M11 = new MassFlow(10, MassFlowUnit.HectogramPerSecond);
+
+            MassFlow M22 = M11.Abs();
+            Debug.Print($"{M22}");
+
+            UnknownUnit local = new UnknownUnit(M11);
+
+
+            Debug.Print($"{local}");
+
+
+
+
+
+
             IEnumerable<BaseUnit> exporters = typeof(BaseUnit)
             .Assembly.GetTypes()
             .Where(t => t.IsSubclassOf(typeof(BaseUnit)))

@@ -1,4 +1,4 @@
-﻿using Fractions;
+using Fractions;
 using Newtonsoft.Json;
 using EngineeringUnits.Units;
 using System.Collections.Generic;
@@ -14,19 +14,19 @@ namespace EngineeringUnits
     public class BaseUnit : IComparable
     {
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "U")]
         public UnitSystem Unit { get; set;}
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "S", DefaultValueHandling = DefaultValueHandling.Ignore)]
         protected decimal SymbolValue { get; set; }
         public decimal BaseunitValue => SymbolValue * ConvertToBaseUnit();
 
         [Obsolete("Use .As() instead - ex myPower.As(PowerUnit.Watt)")]
         public double Value => (double)SymbolValue;
 
+        [JsonConstructor]
         public BaseUnit()
         {
-
         }
 
         public BaseUnit(double valueLocalUnit) :this()
@@ -37,14 +37,16 @@ namespace EngineeringUnits
 
         public BaseUnit(decimal value, UnitSystem unitSystem)
         {
-            Unit = unitSystem.Copy();
+            //Unit = unitSystem.Copy();
+            Unit = unitSystem;
             SetValue(value);
         }
 
         public BaseUnit(double value, UnitSystem unitSystem)
         {
             
-            Unit = unitSystem.Copy();
+            //Unit = unitSystem.Copy();
+            Unit = unitSystem;
 
             if (value < (double)Decimal.MinValue || value > (double)Decimal.MaxValue || Double.IsNaN(value))            
                 SetValue(0);            
@@ -54,11 +56,36 @@ namespace EngineeringUnits
 
         public BaseUnit(int value, UnitSystem unitSystem)
         {
-            Unit = unitSystem.Copy();
+            //Unit = unitSystem.Copy();
+            Unit = unitSystem;
             SetValue(value);
         }
 
-     
+        public BaseUnit(UnknownUnit unit)
+        {
+
+            Unit = unit.unitsystem;
+            SetValue(unit.baseUnit.ToTheOutSide(Unit));
+
+
+            UnitCheck(unit);
+        }
+
+        public BaseUnit(UnknownUnit unit, UnitSystem unitSystem)
+        {
+            if (unit.baseUnit.Unit.Symbol is null)            
+                Unit = unitSystem;            
+            else            
+                Unit = unit.unitsystem;
+            
+
+            SetValue(unit.baseUnit.ToTheOutSide(Unit));
+
+
+            UnitCheck(unit);
+        }
+
+
         public double As(UnitSystem a)
         {
 
@@ -79,6 +106,17 @@ namespace EngineeringUnits
             }                       
 
             SetValue(a.baseUnit.ToTheOutSide(Unit));
+        }
+
+
+        public void UnitCheck(UnknownUnit a)
+        {
+
+            if (a.unitsystem != Unit)
+            {
+                throw new InvalidOperationException($"This is NOT a [{Unit}] as expected! Your Unit is a [{a.unitsystem}] ");
+            }
+
         }
 
 
@@ -281,23 +319,23 @@ namespace EngineeringUnits
 
         public UnknownUnit Abs()
         {
-            BaseUnit local = new BaseUnit();
-            local.Unit = Unit;
 
-            if (SymbolValue < 0)            
-                SymbolValue *= -1;
+            UnknownUnit local = new UnknownUnit();
+            local.baseUnit.Unit = Unit;
+            local.baseUnit.SymbolValue = SymbolValue;
+
+            if (SymbolValue < 0)
+                local.baseUnit.SymbolValue *= -1;
             
-            local.SymbolValue = SymbolValue;
+
 
             return local;
-
         }
+
+
 
         public UnknownUnit Pow(int toPower)
         {
-            
-
-
 
             if (toPower == 1)            
                 return this;
@@ -309,9 +347,6 @@ namespace EngineeringUnits
 
             if (toPower == 0)
                 return local;
-
-
-            //error when 0?
 
 
             if (toPower > 1)            
@@ -382,4 +417,8 @@ namespace EngineeringUnits
 
 
     }
-}
+
+
+
+
+    }

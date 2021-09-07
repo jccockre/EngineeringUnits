@@ -1,8 +1,5 @@
-﻿using Fractions;
-using EngineeringUnits.Units;
-using System.Collections.Generic;
-using System.Text;
-using EngineeringUnits.Units;
+﻿using EngineeringUnits.Units;
+
 
 namespace EngineeringUnits
 {
@@ -11,7 +8,7 @@ namespace EngineeringUnits
 
         public MassConcentration()
         {
-            Unit = DensityUnit.SI.Unit.Copy();
+            //Unit = DensityUnit.SI.Unit.Copy();
         }
 
         public MassConcentration(decimal value, DensityUnit selectedUnit) : base(value, selectedUnit.Unit) { }

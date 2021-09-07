@@ -11,23 +11,35 @@ using System;
 
 namespace EngineeringUnits
 {
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class UnitSystem
     {
-
-        [JsonProperty]
+        [JsonProperty(PropertyName = "S", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Symbol { get; set; }
 
-        //Just have a list of units?
-        //public List<Enumeration> UnitListBeta = new List<Enumeration>();
+        [JsonProperty(PropertyName = "L", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public LengthUnit Length { get; set; } //Length
 
-        public LengthUnit Length { get; set; }
-        public MassUnit Mass { get; set; }
-        public DurationUnit Duration { get; set; }
-        public ElectricCurrentUnit Electriccurrent { get; set; }
-        public TemperatureUnit Temperature { get; set; }
-        public AmountOfSubstanceUnit Amount { get; set; }
-        public LuminousIntensityUnit LuminousIntensity { get; set; }
-        public CombinedUnit Combined { get; set; }
+        [JsonProperty(PropertyName = "M", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public MassUnit Mass { get; set; } //Mass
+
+        [JsonProperty(PropertyName = "D", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public DurationUnit Duration { get; set; } //Duration
+
+        [JsonProperty(PropertyName = "E", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public ElectricCurrentUnit Electriccurrent { get; set; } //Electriccurrent
+
+        [JsonProperty(PropertyName = "T", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public TemperatureUnit Temperature { get; set; } //Temperature
+
+        [JsonProperty(PropertyName = "A", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public AmountOfSubstanceUnit Amount { get; set; } //Amount
+
+        [JsonProperty(PropertyName = "LI", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public LuminousIntensityUnit LuminousIntensity { get; set; } //LuminousIntensity
+
+        [JsonProperty(PropertyName = "C", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public CombinedUnit Combined { get; set; } //Combined
 
 
         public UnitSystem()
@@ -99,7 +111,7 @@ namespace EngineeringUnits
             }
 
             //Using a unitsystem as the final system
-            return a.Copy();
+            return a;
         }
 
         public static UnitSystem Subtract(UnitSystem a, UnitSystem b)
@@ -136,11 +148,13 @@ namespace EngineeringUnits
             }
             else if (a.Length is object)
             {
-                local.Length = (LengthUnit)a.Length.Clone();
+                //local.L = (LengthUnit)a.L.Clone();
+                local.Length = a.Length;
             }
             else if (b.Length is object)
             {
-                local.Length = (LengthUnit)b.Length.Clone();
+                //local.L = (LengthUnit)b.L.Clone();
+                local.Length = b.Length;
             }
 
 
@@ -165,11 +179,13 @@ namespace EngineeringUnits
             }
             else if (a.Mass is object)
             {
-                local.Mass = (MassUnit)a.Mass.Clone();
+                //local.M = (MassUnit)a.M.Clone();
+                local.Mass = a.Mass;
             }
             else if (b.Mass is object)
             {
-                local.Mass = (MassUnit)b.Mass.Clone();
+                //local.M = (MassUnit)b.M.Clone();
+                local.Mass = b.Mass;
             }
 
 
@@ -192,11 +208,13 @@ namespace EngineeringUnits
             }
             else if (a.Duration is object)
             {
-                local.Duration = (DurationUnit)a.Duration.Clone();
+                //local.D = (DurationUnit)a.D.Clone();
+                local.Duration = a.Duration;
             }
             else if (b.Duration is object)
             {
-                local.Duration = (DurationUnit)b.Duration.Clone();
+                //local.D = (DurationUnit)b.D.Clone();
+                local.Duration = b.Duration;
             }
 
 
@@ -219,11 +237,13 @@ namespace EngineeringUnits
             }
             else if (a.Electriccurrent is object)
             {
-                local.Electriccurrent = (ElectricCurrentUnit)a.Electriccurrent.Clone();
+                //local.E = (ElectricCurrentUnit)a.E.Clone();
+                local.Electriccurrent = a.Electriccurrent;
             }
             else if (b.Electriccurrent is object)
             {
-                local.Electriccurrent = (ElectricCurrentUnit)b.Electriccurrent.Clone();
+                //local.E = (ElectricCurrentUnit)b.E.Clone();
+                local.Electriccurrent = b.Electriccurrent;
             }
 
 
@@ -245,11 +265,13 @@ namespace EngineeringUnits
             }
             else if (a.Temperature is object)
             {
-                local.Temperature = (TemperatureUnit)a.Temperature.Clone();
+                //local.T = (TemperatureUnit)a.T.Clone();
+                local.Temperature = (TemperatureUnit)a.Temperature;
             }
             else if (b.Temperature is object)
             {
-                local.Temperature = (TemperatureUnit)b.Temperature.Clone();
+                //local.T = (TemperatureUnit)b.T.Clone();
+                local.Temperature = (TemperatureUnit)b.Temperature;
             }
 
 
@@ -273,11 +295,13 @@ namespace EngineeringUnits
             }
             else if (a.Amount is object)
             {
-                local.Amount = (AmountOfSubstanceUnit)a.Amount.Clone();
+                //local.A = (AmountOfSubstanceUnit)a.A.Clone();
+                local.Amount = a.Amount;
             }
             else if (b.Amount is object)
             {
-                local.Amount = (AmountOfSubstanceUnit)b.Amount.Clone();
+                //local.A = (AmountOfSubstanceUnit)b.A.Clone();
+                local.Amount = b.Amount;
             }
 
 
@@ -300,11 +324,13 @@ namespace EngineeringUnits
             }
             else if (a.LuminousIntensity is object)
             {
-                local.LuminousIntensity = (LuminousIntensityUnit)a.LuminousIntensity.Clone();
+                //local.LI = (LuminousIntensityUnit)a.LI.Clone();
+                local.LuminousIntensity = (LuminousIntensityUnit)a.LuminousIntensity;
             }
             else if (b.LuminousIntensity is object)
             {
-                local.LuminousIntensity = (LuminousIntensityUnit)b.LuminousIntensity.Clone();
+                //local.LI = (LuminousIntensityUnit)b.LI.Clone();
+                local.LuminousIntensity = (LuminousIntensityUnit)b.LuminousIntensity;
             }
 
 
@@ -317,11 +343,13 @@ namespace EngineeringUnits
             }
             else if (a.Combined is object)
             {
-                local.Combined = (CombinedUnit)a.Combined.Clone();
+                //local.C = (CombinedUnit)a.C.Clone();
+                local.Combined = a.Combined;
             }
             else if (b.Combined is object)
             {
-                local.Combined = (CombinedUnit)b.Combined.Clone();
+                //local.C = (CombinedUnit)b.C.Clone();
+                local.Combined = b.Combined;
             }
 
 
@@ -350,7 +378,8 @@ namespace EngineeringUnits
             }
             else if (a.Length is object)
             {
-                local.Length = (LengthUnit)a.Length.Clone();
+                //local.L = (LengthUnit)a.L.Clone();
+                local.Length = a.Length;
             }
             else if (b.Length is object)
             {
@@ -376,7 +405,8 @@ namespace EngineeringUnits
             }
             else if (a.Mass is object)
             {
-                local.Mass = (MassUnit)a.Mass.Clone();
+                //local.M = (MassUnit)a.M.Clone();
+                local.Mass = a.Mass;
             }
             else if (b.Mass is object)
             {
@@ -403,7 +433,8 @@ namespace EngineeringUnits
             }
             else if (a.Duration is object)
             {
-                local.Duration = (DurationUnit)a.Duration.Clone();
+                //local.D = (DurationUnit)a.D.Clone();
+                local.Duration = a.Duration;
             }
             else if (b.Duration is object)
             {
@@ -430,7 +461,8 @@ namespace EngineeringUnits
             }
             else if (a.Electriccurrent is object)
             {
-                local.Electriccurrent = (ElectricCurrentUnit)a.Electriccurrent.Clone();
+                //local.E = (ElectricCurrentUnit)a.E.Clone();
+                local.Electriccurrent = a.Electriccurrent;
             }
             else if (b.Electriccurrent is object)
             {
@@ -458,7 +490,8 @@ namespace EngineeringUnits
             }
             else if (a.Temperature is object)
             {
-                local.Temperature = (TemperatureUnit)a.Temperature.Clone();
+                //local.T = (TemperatureUnit)a.T.Clone();
+                local.Temperature = a.Temperature;
             }
             else if (b.Temperature is object)
             {
@@ -486,7 +519,8 @@ namespace EngineeringUnits
             }
             else if (a.Amount is object)
             {
-                local.Amount = (AmountOfSubstanceUnit)a.Amount.Clone();
+                //local.A = (AmountOfSubstanceUnit)a.A.Clone();
+                local.Amount = a.Amount;
             }
             else if (b.Amount is object)
             {
@@ -515,7 +549,8 @@ namespace EngineeringUnits
             }
             else if (a.LuminousIntensity is object)
             {
-                local.LuminousIntensity = (LuminousIntensityUnit)a.LuminousIntensity.Clone();
+                //local.LI = (LuminousIntensityUnit)a.LI.Clone();
+                local.LuminousIntensity = a.LuminousIntensity;
             }
             else if (b.LuminousIntensity is object)
             {
@@ -535,7 +570,8 @@ namespace EngineeringUnits
             }
             else if (a.Combined is object)
             {
-                local.Combined = (CombinedUnit)a.Combined.Clone();
+                //local.C = (CombinedUnit)a.C.Clone();
+                local.Combined = a.Combined;
             }
             else if (b.Combined is object)
             {

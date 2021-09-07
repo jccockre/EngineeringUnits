@@ -5,28 +5,40 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System;
+using System.ComponentModel;
 
 namespace EngineeringUnits
 {
-
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Enumeration :ICloneable
     {
 
-        public string QuantityName { get; set; }
+        [JsonProperty(PropertyName = "Q", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public string QuantityName { get; set; } //QuantityName
 
-        [JsonProperty]
-        public string Symbol { get; private set; }
+        [JsonProperty(PropertyName = "S", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue("")]
+        public string Symbol { get; private set; } //Symbol
 
-        [JsonProperty]
-        public decimal LocalC { get; private set; }
+        [JsonProperty(PropertyName = "LC", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(1.0d)]
+        public decimal LocalC { get; private set; } //LocalC
 
-        [JsonProperty]
-        public decimal GlobalC { get; private  set; }
-        public Fraction ActualC { get; set; }
+        [JsonProperty(PropertyName = "GC", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(1.0d)]
+        public decimal GlobalC { get; private  set; } //GlobalC
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "AC", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        //[DefaultValue(value: Fraction.One)]
+        public Fraction ActualC { get; set; } //ActualC
+
+        [JsonProperty(PropertyName = "B", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(0d)]
         public decimal B { get; private set; }
-        public int Count { get; set; }
+
+        [JsonProperty(PropertyName = "C", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(1)]
+        public int Count { get; set; } //Count
 
         [JsonIgnore]
         public UnitSystem Unit { get; protected set; }
